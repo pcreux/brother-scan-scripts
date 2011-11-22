@@ -1,4 +1,5 @@
 #! /bin/sh
+# Based on http://welcome.solutions.brother.com/bsc/public_s/id/linux/en/instruction_scn4.html
 set +o noclobber
 #
 #   $1 = scanner device
@@ -24,8 +25,8 @@ for pnmfile in $(ls "$output_tmp"*)
 do
    echo convert  "$pnmfile"  "$pnmfile".jpg
    convert  "$pnmfile" "$pnmfile".jpg
-   rm -f "$pnmfile"
+   echo convert  "$pnmfile".jpg "$pnmfile".pdf
+   convert  "$pnmfile".jpg "$pnmfile".pdf
+   echo mv "$pnmfile".pdf $BASE
+   mv "$pnmfile".pdf $BASE
 done
-
-echo convert "$output_tmp"*.jpg "$output".pdf
-convert "$output_tmp"*.jpg "$output".pdf
