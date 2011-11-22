@@ -8,7 +8,7 @@ set +o noclobber
 #   
 #       100,200,300,400,600
 #
-resolution=300
+resolution=150
 device=$1
 BASE=~/Dropbox/Evernote
 
@@ -22,13 +22,10 @@ echo "scan from $2($device)"
 scanadf --device-name "$device" --resolution $resolution -o"$output_tmp"_%04d
 for pnmfile in $(ls "$output_tmp"*)
 do
-   echo pnmtops  "$pnmfile"  "$pnmfile".ps
-   pnmtops  "$pnmfile"  > "$pnmfile".ps
+   echo convert  "$pnmfile"  "$pnmfile".jpg
+   convert  "$pnmfile" "$pnmfile".jpg
    rm -f "$pnmfile"
 done
 
-echo psmerge -o"$output_tmp".ps  $(ls "$output_tmp"*.ps)
-psmerge -o"$output_tmp".ps  $(ls "$output_tmp"*.ps)
-
-echo ps2pdf "$output_tmp".ps   "$output".pdf
-ps2pdf "$output_tmp".ps   "$output".pdf
+echo convert "$output_tmp"*.jpg "$output".pdf
+convert "$output_tmp"*.jpg "$output".pdf
